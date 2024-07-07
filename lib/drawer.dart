@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'signin.dart';
 import 'signup.dart';
 import 'calculator.dart';
+import 'theme_provider.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -52,9 +56,20 @@ class MyDrawer extends StatelessWidget {
               );
             },
           ),
+          SwitchListTile(
+            title: Text('Dark Mode'),
+            value: themeProvider.themeMode == ThemeMode.dark,
+            onChanged: (value) {
+              themeProvider.toggleTheme(value);
+            },
+            secondary: Icon(
+              themeProvider.themeMode == ThemeMode.dark
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
+            ),
+          ),
         ],
       ),
     );
   }
 }
-
